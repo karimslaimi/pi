@@ -1,0 +1,105 @@
+mat-form-field {
+    width: 100%;
+}
+textarea {
+    resize: none;
+    flex: 1;
+}
+input[type="file"] {
+    visibility: hidden;
+}
+
+.image-preview {
+    margin-top:7px;
+    margin-bottom: 11px;
+}
+.image-preview img {
+    max-height:250px;
+    max-width:80%;
+    margin: 0 auto;
+}
+.full-width {
+    width: 100%;
+    display: flex;
+}
+
+// Define custom variables
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+
+// Apply SCSS styles to the HTML
+div {
+  margin-bottom: 10px;
+
+  h3 {
+    color: $primary-color;
+  }
+
+  form {
+    .full-width {
+      textarea {
+        width: 100%;
+      }
+    }
+
+    button.btn {
+      background-color: $primary-color;
+      color: #fff;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    span {
+      color: red;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .image-preview {
+      text-align: center;
+
+      img {
+        max-width: 100%;
+        max-height: 130px;
+        margin-left: 5px;
+        border-radius: 10px;
+      }
+    }
+
+    .text-right {
+      text-align: right;
+      margin-top: 10px;
+
+      button {
+        margin-left: 5px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &.submit-button {
+          background-color: $primary-color;
+          color: #fff;
+        }
+
+        &.discard-button {
+          background-color: $secondary-color;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.no-margin {
+  margin-bottom: 5px !important;
+}
+
+.btn {
+  margin-left: 5px;
+}

@@ -1,0 +1,44 @@
+<div style="margin-bottom: 30px;margin-top: 30px;">
+  <form [formGroup]="form" *ngIf="!isLoading" (ngSubmit)="savePost()">
+    <div class="row no-margin">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Create Post</label>
+          <div class="profile__input">
+            <textarea 
+              placeholder="Share something with us ...."
+              formControlName="content">
+            </textarea>
+         </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <!-- <img> -->
+      <span *ngIf="form.get('image').errors?.invalidMimeType">
+        Upload only images with jpg, jpeg, png extensions
+      </span>
+      <input type="file" #inputFile (change)="uploadImage($event)" />
+  
+      <div
+        class="image-preview text-center pull-left"
+        *ngIf="imagePreviewUrl && form.get('image').valid && !isVideo(imagePreviewUrl)"
+      >
+        <img [src]="imagePreviewUrl" />
+      </div>
+      <div
+        class="image-preview text-center pull-left"
+        *ngIf="imagePreviewUrl && form.get('image').valid && isVideo(imagePreviewUrl)"
+      >
+        <video [src]="imagePreviewUrl" class="post-video" alt="" controls></video>
+      </div>
+    </div>
+    <button type="submit" class="btn  btn-success pull-right"  *ngIf="(form.value.image && form.get('image').valid) || form.value.content">Create Post</button>
+    <button type="button" class="btn btn-info btn-fill pull-right" (click)="inputFile.click()"> Upload Media </button>
+    <button (click)="discardPost()" class="btn btn-danger btn-fill pull-right" *ngIf="(form.value.image && form.get('image').valid) || form.value.content">Discard</button>
+    <div class="clearfix"></div>
+  </form>
+
+
+
+</div>

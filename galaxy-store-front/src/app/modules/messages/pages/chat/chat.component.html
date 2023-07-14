@@ -1,0 +1,128 @@
+<section class="nft__area">
+  <div class="container border-container">
+      <div class="row nft__area">
+        <section class="discussions">
+          <div class="discussion search">
+            <div class="searchbar">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              <input type="text" placeholder="Search..." />
+            </div>
+          </div>
+              <div *ngFor="let room of rooms" class="discussion message-active"  (click)="swapRoom(room)">
+                <div class="photo" style="background-image: url(https://i0.wp.com/classnotes.ng/wp-content/uploads/2020/04/group-of-people-social-studies-classnotesng-e1593187110131.jpg?fit=500%2C482&ssl=1);">
+                  <div class="online"></div>
+                </div>
+                <div class="desc-contact">
+                  <p class="name">{{ room }}</p>
+                </div>
+              </div>
+                <div *ngFor="let user of userList" class="discussion message-active" (click)="connectUser(user)">
+                  <div class="photo" style="background-image: url(https://cdn-icons-png.flaticon.com/512/206/206853.png);">
+                    <div class="online"></div>
+                  </div>
+                  <div class="desc-contact">
+                    <p class="name">{{ user.username !== currentUser ? user.username: "Me (personal)" }}</p>
+                  </div>
+                </div>
+        </section>
+        <section class="chat">
+          <div class="header-chat nft__area"> 
+            <i class="icon fa fa-user" aria-hidden="true" style="width: 5%;"></i>
+            <p class="name" style="width: 85%;">{{ currentRoom | roomUsername }}</p>
+            <i class="icon clickable fa fa-phone" aria-hidden="true"  style="width: 10%;" (click)="callUser()" ></i>
+          </div>
+          <div class="messages-chat">
+            <div *ngIf="!calling; else conversationContainer">
+              <div *ngFor="let message of messages">
+                  <div class="message" *ngIf="message.user !== currentUser; else OtherUser" >
+                    <div class="photo" style="background-image: url(https://cdn-icons-png.flaticon.com/512/206/206853.png);">
+                      <div class="online"></div>
+                    </div>
+                    <p class="text"> {{ message.message }} </p>
+                  </div>
+                  <p class="time" *ngIf="message.user !== currentUser" > {{ message.date | date : "MMM d, y, h:mm a" }}</p>
+                <ng-template #OtherUser>
+                  <div class="discussion-content">
+                    <div class="message text-only">
+                      <div class="response">
+                        <p class="text"> {{ message.message }} </p>
+                      </div>
+                    </div>
+                    <p class="response-time time">  {{ message.date | date : "MMM d, y, h:mm a" }} </p>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+
+            <ng-template #conversationContainer>
+              <div style="height: 80%; width: 100%">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col text-center">
+                      <div id="video-wrapper">
+                        <video #remoteVideo id="remote-video" autoplay></video>
+                        <video
+                          #localVideo
+                          id="local-video"
+                          autoplay
+                          [muted]="true"
+                        ></video>
+                      </div>
+                      <div class="row settings-call" *ngIf="!noCall">
+                        <img
+                          src="../../../../../assets/img/cancel-call.png"
+                          class="call-images"
+                          (click)="cancelCall()"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <div class="footer-chat">
+            <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
+            <input type="text" class="write-message" placeholder="Type your message here" [(ngModel)]="messageText" />
+            <i class="icon send fa-light fa fa-paper-plane" aria-hidden="true" (click)="sendMessage()" ></i>
+          </div>
+        </section>
+      </div>
+    </div>
+</section>
+
+
+  <div class="calling-modal" *ngIf="inCall">
+    <div class="modal-container">
+      <div style="height: fit-content">
+        <img
+          src="{{ userRemote.image }}"
+          style="
+            width: 60px;
+            border-radius: 100px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+          "
+        />
+      </div>
+      <div style="height: fit-content">
+        <h4 style="color: black" >{{ userRemote.username }}</h4>
+        <h5 style="color: black">Calling ...</h5>
+      </div>
+      <div class="row" style="justify-content: center; margin-top: 50px">
+        <img
+          *ngIf="!iIamCalling"
+          src="../../../../../assets/img/call.png"
+          class="call-images"
+          (click)="answerCall()"
+        />
+        <img
+          src="../../../../../assets/img/cancel-call.png"
+          class="call-images"
+          (click)="cancelCall()"
+        />
+      </div>
+    </div>
+  </div>
+
+

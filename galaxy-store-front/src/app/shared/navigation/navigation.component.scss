@@ -1,0 +1,13 @@
+.transparent-bg {
+  background-color: transparent !important;
+}
+
+.ml-auto {
+  flex: 1;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.navbar-nav {
+  flex-direction: row-reverse;
+}

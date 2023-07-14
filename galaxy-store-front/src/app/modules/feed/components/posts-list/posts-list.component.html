@@ -1,0 +1,331 @@
+<main>
+  <section class="nft__area pt-110 pb-120">
+    <div class="container tp-container">
+      <div class="row">
+        <div class="col-xxl-9">
+          <div class="section__title-wrapper mb-40">
+            <h4 class="section__title-stroke">Explore</h4>
+            <h3 class="section__title">New feeds</h3>
+          </div>
+        </div>
+      </div>
+      <app-create-post></app-create-post>
+      <div class="row">
+        <div *ngFor="let post of posts" class="col-lg-12">
+          <div class="bid__item mb-30 theme-bg-dark">
+            <div class="bid__item-wrapper">
+              <app-share-buttons
+              [id]="post.id"
+              [image]="post.imageUrl"
+              [title]="post.content"
+              >
+              </app-share-buttons>
+              <div class="bid__list-wrapper d-sm-flex align-items-center">
+                <div class="full-width pl-30">
+                  <div
+                    class="bid__top d-flex align-items-center justify-content-between mb-20"
+                  >
+                    <div class="bid__user">
+                      <ul>
+                        <li>
+                          <div class="row">
+                            <div class="auto-width">
+                              <a class="flex-div" [routerLink]="['/profile']">
+                                <img
+                                src="https://cdn-icons-png.flaticon.com/256/9131/9131529.png"
+                                alt=""
+                                />
+                              </a>
+                            </div>
+                            <div class="auto-width">
+                              <p class="flex-div username">
+                                {{ post.user.username }}
+                              </p>
+                              <p class="time">{{ post?.createdAt | date }}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="row-default-2">
+                      <div class="bid__popularity">
+                        <a
+                          (click)="likeClicked(post)"
+                          [class.not-liked]="!isLiked(post)"
+                          [class.is-liked]="isLiked(post)"
+                        >
+                          <i class="icon_heart"></i>
+                          {{ post.likes.length }}
+                        </a>
+                      </div>
+                      <div
+                        class="bid__popularity"
+                        *ngIf="post.user?.id === idUser"
+                      >
+                        <a style="text-align: center" (click)="editPost(post)">
+                          <i class="fa-regular fa-gear settings-icon"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bid__content">
+                    <div
+                      class="bid__content-top d-flex align-items-center justify-content-between"
+                    >
+                      <h3 class="bid__title">
+                        <a [routerLink]="['/product-details']">{{
+                          post.content
+                        }}</a>
+                      </h3>
+                      <div class="bid__trending-icon mb-15">
+                        <i class="fa-brands fa-ethereum"></i>
+                      </div>
+                    </div>
+
+                    <div
+                      class="bid__thumb m-img mb-15"
+                      *ngIf="post?.imageUrl && !isVideo(post?.imageUrl)"
+                      (click)="openModalImage(post?.imageUrl)"
+                    >
+                      <img [src]="post?.imageUrl" class="post-image" alt="" />
+                    </div>
+                    <div
+                      class="bid__thumb m-img mb-15"
+                      *ngIf="post?.imageUrl && isVideo(post?.imageUrl)"
+                      (click)="openModalImage(post?.imageUrl)"
+                    >
+                      <video
+                        [src]="post?.imageUrl"
+                        class="post-video"
+                        alt=""
+                        controls
+                      ></video>
+                    </div>
+                  </div>
+                  <div
+                    class="bid__bottom d-flex align-items-center justify-content-between"
+                  >
+                    <div class="row-default comments-wrapper">
+                      <div class="col-12">
+                        <ng-container
+                          *ngFor="let comment of post.comments; let i = index"
+                        >
+                          <div
+                            class="row-default comment"
+                            *ngIf="editedCommentIndex !== i"
+                          >
+                            <div
+                              *ngIf="comment?.user.imageUrl"
+                              class="col-1 user"
+                            >
+                              <a
+                                [routerLink]="[
+                                  '/profile/user',
+                                  comment?.user._id
+                                ]"
+                              >
+                                <img
+                                  class="rounded-circle"
+                                  src="{{ comment.user?.imageUrl }}"
+                                  alt=""
+                                />
+                              </a>
+                            </div>
+
+                            <a
+                              *ngIf="!comment?.user.imageUrl"
+                              [routerLink]="[
+                                '/profile/user',
+                                comment?.user._id
+                              ]"
+                              class="col-1 user"
+                              style="
+                                text-decoration: none;
+                                margin: 0;
+                                padding: 0;
+                              "
+                            >
+                              <div class="comment-image text-center">
+                                {{ comment?.user.username | transformUsername }}
+                              </div>
+                            </a>
+
+                            <div class="row col-10 body">
+                              <div class="user-info">
+                                <p class="time-out bold-text">
+                                  {{ comment.user.username }}
+                                </p>
+                                <p class="time-out">
+                                  {{ comment.createdAt | date }}
+                                </p>
+                              </div>
+                              <ng-template
+                                [ngIf]="comment.user?._id === idUser"
+                              >
+                                <span class="options float-right">
+                                  <i
+                                    class="fas fa-ellipsis-v"
+                                    mat-button
+                                    [matMenuTriggerFor]="menu"
+                                  ></i>
+                                </span>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    *ngIf="comment.user?._id === idUser"
+                                    (click)="enableEditComment(post, comment)"
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    mat-menu-item
+                                    (click)="deleteComment(comment, post)"
+                                  >
+                                    Delete
+                                  </button>
+                                </mat-menu>
+                              </ng-template>
+                              <p class="comment-content">
+                                {{ comment.content }}
+                              </p>
+                            </div>
+                          </div>
+                          <div
+                            class="row-default comment"
+                            *ngIf="editedCommentIndex === i"
+                          >
+                            <div
+                              *ngIf="comment?.user.imageUrl"
+                              class="col-1 user"
+                              style="margin-top: -4px"
+                            >
+                              <img
+                                class="rounded-circle"
+                                src="{{ user?.imageUrl }}"
+                                alt=""
+                              />
+                            </div>
+
+                            <a
+                              *ngIf="!comment?.user.imageUrl"
+                              class="col-1 user"
+                              style="text-decoration: none"
+                            >
+                              <div class="comment-image text-center">
+                                {{ comment?.user.username | transformUsername }}
+                              </div>
+                            </a>
+
+                            <div class="col-10 body">
+                              <div class="edit-comment form-group">
+                                <div class="header__search mr-30 ml-5 row-default" >
+                                  <div class="header__search-input">
+                                    <input
+                                      type="text"
+                                      [formControl]="editedComment"
+                                      (keyup.enter)="editComment(post, comment)"
+                                      placeholder="Edit comment..."
+                                    />
+                                  </div>
+                                  <div class="auction__more text-md-end">
+                                    <button
+                                      class="tp-btn-border"                                      
+                                      [disabled]="editedComment.invalid"
+                                      (click)="editComment(post, comment)"
+                                    >
+                                      Edit
+                                    </button>
+                                  </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+
+                        <div class="row-default comment">
+                          <div
+                            *ngIf="user?.imageUrl"
+                            class="col-1 user"
+                            style="margin-top: -4px"
+                          >
+                            <img
+                              class="rounded-circle"
+                              src="{{ user?.imageUrl }}"
+                              alt=""
+                            />
+                          </div>
+
+                          <a
+                            *ngIf="!user?.imageUrl"
+                            class="col-1 user"
+                            style="
+                              text-decoration: none;
+                              margin-top: -4px;
+                              margin-right: 5px;
+                            "
+                          >
+                            <div class="comment-image text-center">
+                              {{ user?.username }}
+                            </div>
+                          </a>
+
+                          <div class="col-10 body">
+                            <div class="header__search mr-30 ml-5 row-default">
+                              <div class="header__search-input">
+                                <input
+                                  type="text"
+                                  [formControl]="newComment"
+                                  (keyup.enter)="onEnterComment(post)"
+                                  placeholder="type something...."
+                                />
+                              </div>
+                              <div class="auction__more text-md-end">
+                                <button
+                                  class="tp-btn-border"
+                                  (click)="onEnterComment(post)"
+                                >
+                                  Share
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--
+              <div class="row">
+        <div class="col-xxl-12">
+          <div class="nft__more text-center mt-20">
+            <a [routerLink]="['/shop']" class="tp-load-more"
+              ><i class="fa-light fa-arrow-rotate-right"></i>View all items</a
+            >
+          </div>
+        </div>
+      </div>
+      -->
+    </div>
+  </section>
+
+  <div
+    id="myModal"
+    class="modal"
+    [ngStyle]="{ display: modalUp ? 'flex' : 'none' }"
+  >
+    <!-- The Close Button -->
+    <span class="close" (click)="closeModalImage()">
+      <i class="fa-regular fa-xmark"></i>
+    </span>
+
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content-image" id="img01" [src]="imagePreviewUrl" />
+  </div>
+</main>

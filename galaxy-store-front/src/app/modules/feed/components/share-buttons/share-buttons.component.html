@@ -1,0 +1,32 @@
+<div
+  class="container-fluid py-3 flex-left"
+  (click)="toggleIcons()"
+  [@fadeInOut]="!hideIcons ? 'void' : '*'"
+  [ngStyle]="{ display: hideIcons ? 'flex' : 'none' }"
+>
+  <i class="fa fa-share"></i>
+</div>
+<div
+  class="container-fluid py-3 flex-left"
+  [@fadeInOut]="hideIcons ? 'void' : '*'"
+  [ngStyle]="{ display: !hideIcons ? 'flex' : 'none' }"
+>
+  <div >
+    <i class="fa fa-xmark" (click)="toggleIcons()"></i>
+  </div>
+  <div (click)="goToLink(urlToShare.facebook)">
+    <i class="fab fa-facebook-f"></i>
+  </div>
+  <div (click)="goToLink(urlToShare.twitter)">
+    <i class="fab fa-twitter"></i>
+  </div>
+  <div (click)="goToLink(urlToShare.linkedin)">
+    <i class="fab fa-linkedin-in"></i>
+  </div>
+  <div (click)="goToLink(urlToShare.instagram)">
+    <i class="fab fa-instagram"></i>
+  </div>
+  <div (click)="goToLink(urlToShare.reddit)">
+    <i class="fab fa-reddit-alien"></i>
+  </div>
+</div>

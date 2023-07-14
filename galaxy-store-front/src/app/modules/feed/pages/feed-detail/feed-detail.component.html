@@ -1,0 +1,160 @@
+<div class="container">
+  <div class="col-lg-12">
+    <div class="bid__item mb-30 theme-bg-dark">
+      <div class="bid__item-wrapper">
+        <div class="bid__list-wrapper d-sm-flex align-items-center">
+          <div class="full-width pl-30">
+            <div
+              class="bid__top d-flex align-items-center justify-content-between mb-20"
+            >
+              <div class="bid__user">
+                <ul>
+                  <li>
+                    <div class="row">
+                      <div class="auto-width">
+                        <a class="flex-div" [routerLink]="['/profile']">
+                          <img
+                            src="assets/img/bid/bid-user-2.jpg"
+                            alt=""
+                          />
+                        </a>
+                      </div>
+                      <div class="auto-width">
+                        <p class="flex-div username">
+                          {{ post.user.username }}
+                        </p>
+                        <p class="time">{{ post?.createdAt | date }}</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="row-default-2">
+                <div class="bid__popularity">
+                  <a class="is-liked"
+                  >
+                    <i class="icon_heart"></i>
+                    {{ post.likes.length }}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="bid__content">
+              <div
+                class="bid__content-top d-flex align-items-center justify-content-between"
+              >
+                <h3 class="bid__title">
+                  <a [routerLink]="['/product-details']">{{
+                    post.content
+                  }}</a>
+                </h3>
+                <div class="bid__trending-icon mb-15">
+                  <i class="fa-brands fa-ethereum"></i>
+                </div>
+              </div>
+  
+              <div
+                class="bid__thumb m-img mb-15"
+                *ngIf="post?.imageUrl && !isVideo(post?.imageUrl)"
+                (click)="openModalImage(post?.imageUrl)"
+              >
+                <img [src]="post?.imageUrl" class="post-image" alt="" />
+              </div>
+              <div
+                class="bid__thumb m-img mb-15"
+                *ngIf="post?.imageUrl && isVideo(post?.imageUrl)"
+                (click)="openModalImage(post?.imageUrl)"
+              >
+                <video
+                  [src]="post?.imageUrl"
+                  class="post-video"
+                  alt=""
+                  controls
+                ></video>
+              </div>
+            </div>
+            <div
+              class="bid__bottom d-flex align-items-center justify-content-between"
+            >
+              <div class="row-default comments-wrapper">
+                <div class="col-12">
+                  <ng-container
+                    *ngFor="let comment of post.comments; let i = index"
+                  >
+                    <div
+                      class="row-default comment"
+                    >
+                      <div
+                        *ngIf="comment?.user.imageUrl"
+                        class="col-1 user"
+                      >
+                        <a
+                          [routerLink]="[
+                            '/profile/user',
+                            comment?.user._id
+                          ]"
+                        >
+                          <img
+                            class="rounded-circle"
+                            src="{{ comment.user?.imageUrl }}"
+                            alt=""
+                          />
+                        </a>
+                      </div>
+  
+                      <a
+                        *ngIf="!comment?.user.imageUrl"
+                        [routerLink]="[
+                          '/profile/user',
+                          comment?.user._id
+                        ]"
+                        class="col-1 user"
+                        style="
+                          text-decoration: none;
+                          margin: 0;
+                          padding: 0;
+                        "
+                      >
+                        <div class="comment-image text-center">
+                          {{ comment?.user.username | transformUsername }}
+                        </div>
+                      </a>
+  
+                      <div class="row col-10 body">
+                        <div class="user-info">
+                          <p class="time-out bold-text">
+                            {{ comment.user.username+ "1212121" }}
+                          </p>
+                          <p class="time-out">
+                            {{ comment.createdAt | date }}
+                          </p>
+                        </div>
+                        <p class="comment-content">
+                          {{ comment.content }}
+                        </p>
+                      </div>
+                    </div>
+        
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+id="myModal"
+class="modal"
+[ngStyle]="{ display: modalUp ? 'flex' : 'none' }"
+>
+<!-- The Close Button -->
+<span class="close" (click)="closeModalImage()">
+  <i class="fa-regular fa-xmark"></i>
+</span>
+
+<!-- Modal Content (The Image) -->
+<img class="modal-content-image" id="img01" [src]="imagePreviewUrl" />
+</div>

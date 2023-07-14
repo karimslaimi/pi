@@ -1,0 +1,97 @@
+<div class="bid__modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="bid__modal-close">
+        <button
+          type="button"
+          class="bid__modal-close-btn"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <i class="fa-regular fa-xmark"></i>
+        </button>
+      </div>
+      <div class="bid__modal">
+        <h3 class="bid__modal-title">Edit your post</h3>
+        <p>Do any changes and click update</p>
+
+        <div class="bid__modal-form">
+          <div *ngIf="isLoading">Loading...</div>
+
+          <form [formGroup]="form" *ngIf="!isLoading" (ngSubmit)="updatePost()">
+            <div class="example-full-width">
+              <div class="edit-comment form-group"></div>
+              <div class="profile__input">
+                <textarea
+                  placeholder="Enter your bio"
+                  [value]="oldPost.content ? oldPost.content : ''"
+                  rows="3"
+                  formControlName="content"
+                >
+                    Hi there, write something ...
+                  </textarea
+                >
+              </div>
+            </div>
+            <div>
+              <!-- <img> -->
+              <div class="row auction__more text-md-end">
+                <button
+                  type="button"
+                  class="tp-btn-border upload-btn"
+                  (click)="inputFile.click()"
+                >
+                  Upload Image
+                </button>
+                <button
+                  type="submit"
+                  class="tp-btn-border upload-btn"
+                  [disabled]="!form.value.content && !imagePreviewUrl"
+                >
+                  Save Changes
+                </button>
+                <button
+                  type="submit"
+                  class="tp-btn-border upload-btn"
+                  [disabled]="!form.value.content && !imagePreviewUrl"
+                  (click)="deletePost()"
+                >
+                  Delete Post
+                </button>
+              </div>
+              <span *ngIf="form.get('image').errors?.invalidMimeType">
+                Upload only images with jpg, jpeg, png extensions
+              </span>
+              <input type="file" #inputFile (change)="uploadImage($event)" />
+
+              <div class="image-preview text-center" id="myImg" *ngIf="imagePreviewUrl && !isVideo(imagePreviewUrl)">
+                <img [src]="imagePreviewUrl" (click)="showImage()" />
+              </div>
+
+              <div class="image-preview text-center" id="myImg" *ngIf="imagePreviewUrl && isVideo(imagePreviewUrl)">
+                <video
+                  [src]="imagePreviewUrl"
+                  class="post-video"
+                  alt=""
+                  controls
+                  ></video>
+            </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Image -->
+<div id="myModal" class="modal" [ngStyle]="{'display': modalUp ? 'flex' : 'none' }">
+  <!-- The Close Button -->
+  <span class="close" (click)="showImage()" >
+    <i class="fa-regular fa-xmark"></i>
+  </span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content-image" id="img01" [src]="imagePreviewUrl" />
+
+</div>
