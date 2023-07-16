@@ -53,6 +53,8 @@ import { AuthGaurd } from './guards/auth-gaurd.service';
 import { ProfileUserResolver } from './core/utils/resolve-profile-user.service';
 import { LoginComponent } from './modules/auth/login/login.component';
 import {SignupComponent} from "./modules/auth/signup/signup.component";
+import {ForgetPasswordComponent} from "./modules/auth/forget-password/forget-password.component";
+import {ResetComponent} from "./modules/auth/reset/reset.component";
 
 
 
@@ -77,14 +79,11 @@ const routes: Routes = [
   { path: 'about', component: AboutMainComponent },
   { path: 'contact', component: ContactMainComponent },
   { path: 'activity', component: ActivityMainComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: SignupComponent },
   { path: 'edit-profile', component: EditProfileMainComponent },
   { path: 'blog', component: BlogMainComponent },
   { path: 'blog-details', component: BlogDetailsMainComponent },
   { path: 'ranking', component: RankingMainComponent },
   { path: 'upcoming', component: UpcomingMainComponent },
-  { path: 'forget', component: ForgetMainComponent },
   { path: 'live-auction', component: LiveAuctionMainComponent },
   { path: 'collection', component: CollectionMainComponent },
   { path: 'collection-grid', component: CollectionGridMainComponent },
@@ -104,6 +103,9 @@ const routes: Routes = [
   { path: 'maintaince', component: MaintananceMainComponent },
   { path: '404', component: ErrorPageMainComponent },
   { path: 'profile', component: ProfileMainComponent },
+
+
+  { path: 'forget/:token', component: ResetComponent },
   {
     path: 'auth',
     loadChildren: () =>
@@ -123,7 +125,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/login',
+    redirectTo: '/auth/login',
   },
 ];
 

@@ -11,6 +11,10 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/chat/message" routerLinkActive="active">Chat</a>
       </li>
+      <li class="nav-item" *ngIf="this.authService.getRole() === 'ROLE_ADMIN'">
+        <a class="nav-link" routerLink="/users" routerLinkActive="active">Utilisateur</a>
+      </li>
+
 
     </ul>
   </div>

@@ -19,7 +19,7 @@
           </div>
           <div class="login__top text-center">
             <h3>Register</h3>
-            <p>Already have an account? <a [routerLink]="['/login']">Sign in </a></p>
+            <p>Already have an account? <a [routerLink]="['/auth/login']">Sign in </a></p>
           </div>
           <div class="login__form">
             <form [formGroup]="form" #ngForm="ngForm" (ngSubmit)="submitSignup()">
@@ -128,7 +128,7 @@
 
               <div class="login__input-title d-flex align-items-center justify-content-between">
                 <div class="forgot-password">
-                  <a [routerLink]="['/forget']">Forgot Password?</a>
+                  <a [routerLink]="['/auth/forget-password']">Forgot Password?</a>
                 </div>
               </div>
               <div class="login__btn mb-20">

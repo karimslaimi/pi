@@ -19,7 +19,7 @@
                 </div>
                 <div class="login__top text-center">
                    <h3>Login</h3>
-                   <p>Don't have an account yet? <a [routerLink]="['/register']">Register</a></p>
+                   <p>Don't have an account yet? <a [routerLink]="['/auth/register']">Register</a></p>
                 </div>
                 <div *ngIf="backEndValidation" class="alert alert-danger" role="alert">
                     {{ backEndValidation}}
@@ -44,7 +44,7 @@
                          <div class="login__input-title d-flex align-items-center justify-content-between">
                             <h4>Password <span>*</span></h4>
                             <div class="forgot-password">
-                               <a [routerLink]="['/forget']">Forgot Password?</a>
+                               <a [routerLink]="['/auth/forget-password']">Forgot Password?</a>
                             </div>
                          </div>
                          <div class="login__input">

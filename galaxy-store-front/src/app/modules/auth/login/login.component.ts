@@ -73,6 +73,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  handleForgetPassword(){
+
+  }
+
   displayPassword(){
     this.showPassword = !this.showPassword;
   }

@@ -136,25 +136,53 @@ exports.signout = async (req, res) => {
   }
 };
 
-exports.forgotPassword = async (req, res) => {
+exports.forgotPassword = async(req, res) => {
   try {
-    const { email } = req.body;
+      const { email } = req.body;
 
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    console.log(user.username)
-    const resetToken = generateResetToken(); // Générer un token de réinitialisation temporaire côté serveur
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 3600000; // Définir une expiration d'une heure
+      const user = await User.findOne({ email });
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      console.log(user.username)
+      const resetToken = generateResetToken(); // Générer un token de réinitialisation temporaire côté serveur
+      user.resetPasswordToken = resetToken;
+      user.resetPasswordExpires = Date.now() + 3600000; // Définir une expiration d'une heure
+      const resetPasswordLink = `http://localhost:4200/forget/${resetToken}`;
 
-    await user.save();
+      await user.save();
+      const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+              user: 'galaxystoreenchere@gmail.com',
+              pass: 'mjqpnbrqaodainaj'
+          },
+      });
+      const mailOptions = {
+          from: 'galaxystoreenchere@gmail.com',
+          to: email,
+          subject: 'Réinitialisation de mot de passe',
+          html: `
+          <p>Bonjour,</p>
+          <p>Vous avez demandé la réinitialisation de votre mot de passe.</p>
+          <p>Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe :</p>
+          <a href="${resetPasswordLink}">${resetPasswordLink}</a>
+          <p>Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet e-mail.</p>
+        `,
+      };
 
-    res.json({ resetToken }); // Renvoyer le token de réinitialisation temporaire au client
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              console.log(error);
+              return res.status(500).json({ message: 'Error sending email' });
+          }
+          console.log('Email sent: ' + info.response);
+          res.json({ message: 'User registration successful. Confirmation email sent to admin.' });
+      });
+      res.json({ resetToken }); // Renvoyer le token de réinitialisation temporaire au client
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Error resetting password' });
+      console.log(error);
+      res.status(500).json({ message: 'Error resetting password' });
   }
 };
 
@@ -170,6 +198,7 @@ exports.resetPassword = async (req, res) => {
       return res.status(400).json({ message: 'Invalid or expired reset token' });
     }
     console.log("=>",user.username)
+    console.log(newPassword);
     user.password = bcrypt.hashSync(newPassword, 8);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
