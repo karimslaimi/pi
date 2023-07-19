@@ -15,12 +15,14 @@ import { ChatModule } from './modules/messages/messages.module';
 import { NavigationComponent } from './shared/navigation/navigation.component';
 import { ShareButtonModule } from 'ngx-sharebuttons/button';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 const config: SocketIoConfig = { url: environment.API_URL, options: {} };
 
 @NgModule({
   declarations: [AppComponent, NavigationComponent],
   imports: [
+    NgxDatatableModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

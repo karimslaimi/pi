@@ -3,7 +3,7 @@ const Role = require('../models/role.model');
 const jwt = require('jsonwebtoken');
 const config = require("../config/auth.config.js");
 const nodemailer = require('nodemailer');
-
+var bcrypt = require("bcryptjs");
 class UserController {
 
     static async getAllUsers(req, res) {
@@ -17,7 +17,7 @@ class UserController {
                 return res.status(404).json({ error: 'Utilisateur introuvable' });
             }
 
-            const hasUserRole = user.roles.some((role) => role.name === 'admin');
+            const hasUserRole = user.roles.some((role) => role.name === 'ADMIN');
             if (!hasUserRole) {
                 return res.status(401).json({ error: 'Access Denied' });
             }
@@ -41,7 +41,7 @@ class UserController {
                 return res.status(404).json({ error: 'Utilisateur introuvable' });
             }
 
-            const hasUserRole = user.roles.some((role) => role.name === 'admin');
+            const hasUserRole = user.roles.some((role) => role.name === 'ADMIN');
             if (!hasUserRole) {
                 return res.status(401).json({ error: 'Access Denied' });
             }
@@ -49,7 +49,7 @@ class UserController {
                 id, { statusUser: 'confirmé' }, { new: true }
             );
 
-            // Send confirmation email to the admin
+            // Send confirmation email to the ADMIN
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -101,7 +101,7 @@ class UserController {
                 return res.status(404).json({ error: 'Utilisateur introuvable' });
             }
 
-            const hasUserRole = user.roles.some((role) => role.name === 'admin');
+            const hasUserRole = user.roles.some((role) => role.name === 'ADMIN');
             if (!hasUserRole) {
                 return res.status(401).json({ error: 'Access Denied' });
             }
@@ -132,7 +132,7 @@ class UserController {
                 return res.status(404).json({ error: 'Utilisateur introuvable' });
             }
 
-            const hasUserRole = user.roles.some((role) => role.name === 'admin');
+            const hasUserRole = user.roles.some((role) => role.name === 'ADMIN');
             if (!hasUserRole) {
                 return res.status(401).json({ error: 'Access Denied' });
             }
@@ -163,7 +163,7 @@ class UserController {
                 return res.status(404).json({ error: 'Utilisateur introuvable' });
             }
 
-            const hasUserRole = user.roles.some((role) => role.name === 'admin');
+            const hasUserRole = user.roles.some((role) => role.name === 'ADMIN');
             if (!hasUserRole) {
                 return res.status(401).json({ error: 'Access Denied' });
             }
@@ -192,7 +192,7 @@ class UserController {
                 return res.status(404).json({ error: 'Utilisateur introuvable' });
             }
 
-            const hasUserRole = user.roles.some((role) => role.name === 'admin');
+            const hasUserRole = user.roles.some((role) => role.name === 'ADMIN');
             if (!hasUserRole) {
                 return res.status(401).json({ error: 'Access Denied' });
             }
@@ -248,8 +248,8 @@ class UserController {
             if (!req.body) {
                 res.status(500).json({ message: 'Veuillez saisir les informations nécessaires' });
             }
-            console.log(userId)
             if (user) {
+                updatedUser.password = bcrypt.hashSync(updatedUser.password, 8);
                 const utilisateur = await User.findByIdAndUpdate(userId, updatedUser, { new: true });
                 res.json(utilisateur)
             } else {
@@ -272,7 +272,7 @@ class UserController {
                 return res.status(404).json({ error: 'Utilisateur introuvable' });
             }
 
-            const hasUserRole = user.roles.some((role) => role.name === 'admin');
+            const hasUserRole = user.roles.some((role) => role.name === 'ADMIN');
             if (!hasUserRole) {
                 return res.status(401).json({ error: 'Access Denied' });
             }
@@ -301,11 +301,11 @@ class UserController {
                 return res.status(404).json({ error: 'Utilisateur introuvable' });
             }
 
-            const hasUserRole = user.roles.some((role) => role.name === 'admin');
+            const hasUserRole = user.roles.some((role) => role.name === 'ADMIN');
             if (!hasUserRole) {
                 return res.status(401).json({ error: 'Access Denied' });
             }
-            const role = await Role.findOne({ name: 'admin' });
+            const role = await Role.findOne({ name: 'ADMIN' });
 
             if (!role) {
                 return res.status(404).json({ error: 'Le rôle "user" n\'existe pas.' });

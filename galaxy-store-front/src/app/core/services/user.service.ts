@@ -1,48 +1,54 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { User } from '../models/user.model';
-import { map } from 'rxjs/operators';
-import { Subject, Observable, from } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'src/environments/environment';
+import {User} from '../models/user.model';
+import {catchError, map} from 'rxjs/operators';
+import {Subject, Observable, from, of, throwError} from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private url: string = environment.API_URL + '/api/users/profiles';
+  private url: string = environment.API_URL + '/api/users';
   private userSub = new Subject<User>();
   user: User | any;
   private userProfileSub = new Subject<User>();
-  constructor(private http: HttpClient) {}
 
-  initUser(id: string) {
-    this.http
-      .get<any>(environment.API_URL + '/api/users/getUserProfile')
-      .pipe(
-        map((response) => {
-          return this.transformUserData(response.user);
-        })
-      )
-      .subscribe((user: User) => {
-        this.user = user;
-        this.userSub.next(user);
-      });
+
+  constructor(private http: HttpClient) {
   }
+
+
   getUser(): Observable<any> {
     return this.userSub.asObservable();
   }
 
   getUserByID(): any {
     this.http
-      .get<any>(this.url + `/${localStorage.getItem('userId')}`)
+      .get<any>(this.url + `/getUserProfile`)
       .pipe(
         map((response) => {
-          return this.transformUserData(response.user);
+          debugger;
+          let res = this.transformUserData(response.user);
+          debugger;
+          return new Observable<any>(o => {
+            o.next(res);
+          });
         })
-      )
-      .subscribe((user: User) => {
-        this.user = user;
-        this.userSub.next(user);
-      });
+      );
+  }
+
+  getUserProfile(): Observable<any> {
+    return this.http.get(this.url + '/getUserProfile')
+      .pipe(
+        map((resp: any) => {
+          return this.transformUserData(resp);
+        }),
+        catchError((err: any) => {
+          console.error(err);
+          return of(err);
+        })
+      );
   }
 
   getUserByIDs(id: string): any {
@@ -71,13 +77,7 @@ export class UserService {
         this.userProfileSub.next(user);
       });
   }
-  getUserProfile(): Observable<any | string> {
-    if (this.userProfileSub) {
-      return this.userProfileSub.asObservable();
-    } else {
-      return from('null');
-    }
-  }
+
 
   changeImage(image: any) {
     const formData = new FormData();
@@ -95,12 +95,59 @@ export class UserService {
       });
   }
 
+
+  updateUser(user: any) {
+    return this.http
+      .put<any>(this.url + "/updateUserProfile", user)
+      .pipe(
+        map(response => {
+            return true;
+          },
+          catchError(error => {
+            console.log(error);
+            return throwError(() => 'Failed to update user');
+          })
+        )
+      );
+  }
+
+
   transformUserData(user: any): User {
     return {
       id: user?._id,
       email: user?.email,
       username: user?.username,
-      imageUrl: user?.imageUrl,
     };
+  }
+
+
+  getAllUsers(){
+    return this.http.get<any[]>(this.url+"/all").pipe(
+      map((resp)=>{
+        return resp
+      }),
+      catchError(err => {
+        console.log(err);
+        return err;
+      })
+    )
+  }
+
+  deleteUser(id:any){
+    return this.http.delete(this.url+'/delete/'+id);
+  }
+
+
+  confirmAccount(id:any){
+    return this.http.put(this.url+'/confirm/'+id,{});
+  }
+
+  blockAccount(id:any){
+    return this.http.put(this.url+'/block/'+id,{});
+  }
+
+  unblockAccount(id:any){
+    return this.http.put(this.url+'/unblock/'+id,{});
+
   }
 }

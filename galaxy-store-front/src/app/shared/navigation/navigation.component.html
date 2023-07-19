@@ -5,14 +5,17 @@
       <li class="nav-item">
         <a class="nav-link" style="cursor: pointer;" (click)="this.handleLogClickt()">{{this.authService.isLoggedIn() ? 'Logout' : 'Login'}}</a>
       </li>
+      <li class="nav-item" *ngIf="authService.isLoggedIn()">
+        <a class="nav-link" routerLink="/user/updateProfile">Profil</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/feed/home" routerLinkActive="active">Feed</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/chat/message" routerLinkActive="active">Chat</a>
       </li>
-      <li class="nav-item" *ngIf="this.authService.getRole() === 'ROLE_ADMIN'">
-        <a class="nav-link" routerLink="/users" routerLinkActive="active">Utilisateur</a>
+      <li class="nav-item" *ngIf="this.authService.isLoggedIn() && this.authService.getRole() === 'ROLE_ADMIN'">
+        <a class="nav-link" routerLink="/user/list" routerLinkActive="active">Utilisateur</a>
       </li>
 
 

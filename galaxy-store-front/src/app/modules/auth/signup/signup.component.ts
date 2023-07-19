@@ -57,6 +57,8 @@ export class SignupComponent implements OnInit {
         username: firstname+lastname,
         email: email,
         password: password,
+        firstName: firstname,
+        lastName: lastname,
         role : 'USER',
       };
       this.authService.signup(signupData).subscribe((result: any) => {

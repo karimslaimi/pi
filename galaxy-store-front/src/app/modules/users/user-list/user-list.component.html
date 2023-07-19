@@ -1,0 +1,49 @@
+<section class="nft__area pt-110 pb-120">
+  <div class="container tp-container">
+    <div class="row">
+      <div class="col-xxl-9">
+        <div class="section__title-wrapper mb-40">
+          <h4 class="section__title-stroke">Explore</h4>
+          <h3 class="section__title">User List</h3>
+        </div>
+      </div>
+    </div>
+      <input type="text" [(ngModel)]="filterText" placeholder="Filter..." (keyup)="filterItems($event)">
+    <div class="row">
+      <ngx-datatable
+        [rows]="data"
+        class="material"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [columns]="columns">
+
+        <ngx-datatable-column *ngFor="let column of columns;
+        let i = index;" name="{{column.name}}"
+                              prop="{{column.prop}}">
+        </ngx-datatable-column>
+
+
+        <ngx-datatable-column name="Actions" prop="Id">
+          <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex"
+                       ngx-datatable-cell-template>
+            <button class="btn btn-danger" (click)="deleteRow(row)">
+             delete
+            </button>         |
+
+            <button  class="btn btn-dark" (click)="handleBlock(row)">
+              {{row.statusCompte =='actif'?'Block':'Unblock'}}
+            </button>         |
+            <button *ngIf="row.statusUser !=='confirmé'" class="btn btn-primary" (click)="confirmAccount(row)">
+             Confirm
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+
+
+      </ngx-datatable>
+
+    </div>
+  </div>
+</section>

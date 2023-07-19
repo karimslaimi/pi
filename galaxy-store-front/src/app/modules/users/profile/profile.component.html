@@ -1,0 +1,142 @@
+<section class="edit__profile pb-120">
+  <div class="edit__profile ">
+    <div class="container-fluid fix p-0">
+      <div class="row">
+        <div class="col-xxl-12">
+          <div class="profile__cover-wrapper p-relative">
+            <div class="profile__cover w-img tp-img-cover">
+              <img src="assets/img/creator/creator-bg-2.jpg" alt="">
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xxl-12">
+          <div class="profile__thumb-wrapper  text-center">
+            <div class="profile__thumb text-center tp-img-profile d-inline-block p-relative">
+              <img src="assets/img/creator/user-1.jpg" alt="">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xxl-4 col-lg-4">
+        <div class="profile__tab mr-40">
+
+        </div>
+      </div>
+      <div class="col-xxl-8 col-lg-8">
+        <div class="profile__tab-content">
+          <div class="tab-content" id="profile-tabContent">
+            <div class="tab-pane fade show active" id="nav-information" role="tabpanel"
+                 aria-labelledby="nav-information-tab">
+              <div class="profile__info">
+                <h3 class="profile__info-title">Welcome!</h3>
+                <div class="profile__info-content">
+                  <span *ngIf="successMsg" class="text-success">{{successMsg}}</span>
+                  <span *ngIf="errorMsg" class="text-danger">{{errorMsg}}</span>
+
+
+                  <form (ngSubmit)="onSubmit()" [formGroup]="form" #ngForm="ngForm">
+                    <div class="row">
+                      <div class="col-xxl-6 col-md-6">
+                        <div class="profile__input-box">
+                          <h4>UserName</h4>
+                          <div class="profile__input">
+                            <input type="text" placeholder="Enter userName" formControlName="username">
+                            <i class="fa-light fa-user"></i>
+                            <div class="invalid text-danger"
+                                 *ngIf="(form.get('username').invalid && form.get('username').touched) ||
+                      (form.get('username').invalid && ngForm.submitted)">
+                              <span *ngIf="form.get('username').errors.required">Username is Required</span>
+                              <span
+                                *ngIf="form.get('username').errors.minlength">Username must be at least 4 chars. </span>
+                              <span *ngIf="form.get('username').errors.pattern">Username should be string</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-xxl-6 col-md-6">
+                        <div class="profile__input-box">
+                          <h4>Email</h4>
+                          <div class="profile__input">
+                            <input type="email" placeholder="Enter your email" formControlName="email">
+                            <i class="fa-light fa-envelope"></i>
+                            <div class="invalid"
+                                 *ngIf="(form.get('email').invalid && form.get('email').dirty) ||
+                      (form.get('email').invalid && ngForm.submitted)">
+                              <span *ngIf="form.get('email').errors.required">E-mail is Required</span>
+                              <span *ngIf="form.get('email').errors.email">E-mail not valid!</span>
+                              <span *ngIf="form.get('email').errors.emailExist">E-mail is already Exist.</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="profile__password">
+
+                        <div class="row">
+
+                          <div class="col-xxl-6 col-md-6">
+                            <div class="profile__input-box">
+                              <h4>New Password</h4>
+                              <div class="profile__input">
+                                <input [type]="this.showPassword?'text':'password'" placeholder="Enter your password"
+                                       formControlName="password">
+                                <span class="login__input-password-visible" (click)="displayPassword()"></span>
+
+                                <div class="invalid" *ngIf="(form.get('password').invalid && form.get('password').dirty) ||
+                                  (form.get('password').invalid && ngForm.submitted)">
+                                  <span *ngIf="form.get('password').errors.required">Password is Required</span>
+                                  <span
+                                    *ngIf="form.get('password').errors.minlength">Password must be at least 6 length</span>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xxl-6 col-md-6">
+                            <div class="profile__input-box">
+                              <h4>Confirm Password</h4>
+                              <div class="profile__input">
+                                <input [type]="this.showPassword?'text':'password'" placeholder="Confirm your password"
+                                       formControlName="confirmPassword">
+                                <span class="login__input-password-visible" (click)="displayPassword()"></span>
+
+
+                                <div class="invalid" *ngIf="(form.get('confirmPassword').invalid && form.get('confirmPassword').touched) ||
+                                  (form.get('confirmPassword').invalid && ngForm.submitted)">
+                                  <span
+                                    *ngIf="form.get('confirmPassword').errors.required">Confirm Password is Required</span>
+                                  <span
+                                    *ngIf="form.get('confirmPassword').errors.minlength">Confirm Password must be at least 6 length</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="col-xxl-12">
+                        <div class="profile__btn">
+                          <button type="submit" [disabled]="isLoading" [ngClass]="isLoading?'disabled':''"
+                                  class="tp-btn-3">Update
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

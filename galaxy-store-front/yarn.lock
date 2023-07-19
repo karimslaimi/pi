@@ -117,9 +117,8 @@
     "rxjs" "6.6.7"
 
 "@angular/animations@^15.0.0 || ^16.0.0", "@angular/animations@15.2.9", "@angular/animations@angular/animations-builds":
-  "integrity" "sha512-K1QhNvnvBx69gNvBCjiM2UBtVTban/7fhUqKWxAPQUVZh656edR0pe/0JfC2xfPei0mfSnvltRC9lisy1gW6Lw=="
-  "resolved" "https://codeload.github.com/angular/animations-builds/tar.gz/272bd9a23d8c9fb4a1460ea6d40879d8b6dc4bf1"
-  "version" "16.2.0-next.0+sha-d381b74"
+  "resolved" "git+ssh://git@github.com/angular/animations-builds.git#1b4dbe694d70b15c7de4922c40018f0bccdcb93a"
+  "version" "16.2.0-next.2+sha-dd43615"
   dependencies:
     "tslib" "^2.3.0"
 
@@ -156,7 +155,7 @@
     "symbol-observable" "4.0.0"
     "yargs" "17.6.2"
 
-"@angular/common@^15.0.0 || ^16.0.0", "@angular/common@^15.2.0", "@angular/common@^16.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=16.0.0 <17.0.0", "@angular/common@15.2.9":
+"@angular/common@^15.0.0 || ^16.0.0", "@angular/common@^15.2.0", "@angular/common@^16.0.0", "@angular/common@>=11.0.2", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=16.0.0 <17.0.0", "@angular/common@15.2.9":
   "integrity" "sha512-LM9/UHG2dRrOzlu2KovrFwWIziFMjRxHzSP3Igw6Symw/wIl0kXGq8Fn6RpFP78zmLqnv+IQOoRiby9MCXsI4g=="
   "resolved" "https://registry.npmmirror.com/@angular/common/-/common-15.2.9.tgz"
   "version" "15.2.9"
@@ -186,7 +185,7 @@
   dependencies:
     "tslib" "^2.3.0"
 
-"@angular/core@^14.0.0", "@angular/core@^15.0.0 || ^16.0.0", "@angular/core@^15.2.0", "@angular/core@^16.0.0", "@angular/core@>=13.0.0", "@angular/core@>=14.0.0", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0 <17.0.0", "@angular/core@15.2.9", "@angular/core@16.2.0-next.0+sha-d381b74":
+"@angular/core@^14.0.0", "@angular/core@^15.0.0 || ^16.0.0", "@angular/core@^15.2.0", "@angular/core@^16.0.0", "@angular/core@>=11.0.2", "@angular/core@>=13.0.0", "@angular/core@>=14.0.0", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0 <17.0.0", "@angular/core@15.2.9", "@angular/core@16.2.0-next.2+sha-dd43615":
   "integrity" "sha512-w46Z1yUXCQfKV7XfnamOoLA2VD0MVUUYVrUjO73mHSskDXSXxfZAEHO9kfUS71Cj35PvhP3mbkqWscpea2WeYg=="
   "resolved" "https://registry.npmmirror.com/@angular/core/-/core-15.2.9.tgz"
   "version" "15.2.9"
@@ -261,7 +260,7 @@
   dependencies:
     "tslib" "^2.3.0"
 
-"@angular/platform-browser@^15.0.0 || ^16.0.0", "@angular/platform-browser@^15.2.0", "@angular/platform-browser@15.2.9":
+"@angular/platform-browser@^15.0.0 || ^16.0.0", "@angular/platform-browser@^15.2.0", "@angular/platform-browser@>=11.0.2", "@angular/platform-browser@15.2.9":
   "integrity" "sha512-ufCHeSX+U6d43YOMkn3igwfqtlozoCXADcbyfUEG8m2y9XASobqmCKvdSk/zfl62oyiA8msntWBJVBE2l4xKXg=="
   "resolved" "https://registry.npmmirror.com/@angular/platform-browser/-/platform-browser-15.2.9.tgz"
   "version" "15.2.9"
@@ -2231,6 +2230,13 @@
   "version" "0.3.17"
   dependencies:
     "tslib" "^2.4.0"
+
+"@swimlane/ngx-datatable@^20.1.0":
+  "integrity" "sha512-oHnnx1QRNmv10l5UME13v5JP3M3GesM9K3QH6TRYo2C7UbbhY7vL5EZ4HGqcvtMMW4FOzqNOSltE++IVL99F3g=="
+  "resolved" "https://registry.npmjs.org/@swimlane/ngx-datatable/-/ngx-datatable-20.1.0.tgz"
+  "version" "20.1.0"
+  dependencies:
+    "tslib" "^2.0.0"
 
 "@tootallnate/once@2":
   "integrity" "sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A=="
@@ -5989,7 +5995,7 @@
   dependencies:
     "queue-microtask" "^1.2.2"
 
-"rxjs@^6.5.3 || ^7.4.0", "rxjs@^7.0.0", "rxjs@^7.5.5", "rxjs@>=6.0.0", "rxjs@>=7.0.0", "rxjs@~7.5.0":
+"rxjs@^6.5.3 || ^7.4.0", "rxjs@^6.6.3 || ^7.4.0", "rxjs@^7.0.0", "rxjs@^7.5.5", "rxjs@>=6.0.0", "rxjs@>=7.0.0", "rxjs@~7.5.0":
   "integrity" "sha512-sy+H0pQofO95VDmFLzyaw9xNJU4KTRSwQIGM6+iG3SypAtCiLDzpeG8sJrNCWn2Up9km+KhkvTdbkrdy+yzZdw=="
   "resolved" "https://registry.npmjs.org/rxjs/-/rxjs-7.5.5.tgz"
   "version" "7.5.5"

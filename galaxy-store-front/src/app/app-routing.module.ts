@@ -55,6 +55,7 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import {SignupComponent} from "./modules/auth/signup/signup.component";
 import {ForgetPasswordComponent} from "./modules/auth/forget-password/forget-password.component";
 import {ResetComponent} from "./modules/auth/reset/reset.component";
+import {UsersModule} from "./modules/users/users.module";
 
 
 
@@ -122,6 +123,11 @@ const routes: Routes = [
     canActivate: [AuthGaurd],
     loadChildren: () =>
       import('./modules/messages/messages.module').then((module) => module.ChatModule),
+  },
+  {
+    path: 'user',
+    canActivate: [AuthGaurd],
+    loadChildren: ()=> import('./modules/users/users.module').then((module)=> module.UsersModule)
   },
   {
     path: '**',
